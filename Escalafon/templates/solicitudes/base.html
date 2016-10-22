@@ -1,5 +1,6 @@
+{% load staticfiles %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es-ec">
 <head>
 	<meta charset="UTF-8">
 	<title>{% block titulo %}{% endblock titulo %}</title>
@@ -7,4 +8,9 @@
 <body>
 	{% block cuerpo %}{% endblock cuerpo %}
 </body>
+
+{% block footer %}{% endblock footer %}
+
+{% block scripts %}{% endblock scripts %}
+
 </html>

@@ -19,14 +19,21 @@ class Categoria(models.Model):
 	nombre = models.CharField(max_length=500)
 
 	def __unicode__(self):
-		return nombre
+		return self.nombre
 
 class Requisito(models.Model):
 	nombre = models.CharField(max_length=500)
 	categoria = models.ForeignKey(Categoria)
 
 	def __unicode__(self):
-		return "%s %s" % (self.nombre, self.categoria.nombre)
+		return "%s %s" % (self.categoria.nombre, self.nombre)
+
+class Evidencia(models.Model):
+	requisito = models.ForeignKey(Requisito)
+	nombre = models.CharField(max_length=500)
+
+	def __unicode__(self):
+		return "%s %s %s" % (self.requisito.categoria.nombre, self.requisito.nombre, self.nombre)
 
 class Inscripcion(models.Model):
 	cedula = models.CharField(max_length=10)
