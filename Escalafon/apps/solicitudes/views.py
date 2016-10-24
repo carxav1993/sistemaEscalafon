@@ -29,3 +29,38 @@ def traerCarreras(request):
 	else:
 		return redirect ('/')
 
+def anadirPersonalTraerArchivos(request):
+	if request.is_ajax():
+		apellidoNombre = request.GET['apellidos'] + " " + request.GET['nombres']
+		cedula = request.GET['cedula']
+		email = request.GET['email']
+		ua = request.GET['ua']
+		carrera = request.GET['carrera']
+		cac = request.GET['cac']
+		cas = request.GET['cas']
+		fi = request.GET['fi']
+		fs = request.GET['fs']
+
+		print apellidoNombre +" "+cedula+ " "+email+" "+ua+" "+carrera+" "+ua+" "+carrera+" "+cac+" "+cas+" "+fi+" "+fs 
+
+		# inscripcion = Inscripcion()
+		# inscripcion.apellidoNombre = apellidoNombre
+		# inscripcion.cedula = cedula
+		# inscripcion.email = email
+		# inscripcion.carrera = carrera
+		# inscripcion.categoriaActual = cac
+		# inscripcion.categoriaSolicitada = cas
+		# inscripcion.fechaIngresoU = fi
+		# inscripcion.fechaInscripcion = fs
+		
+		# inscripcion.save()
+
+		requisitos = Requisito.objects.filter(categoria=cas)
+		print requisitos
+		requisitos = serializers.serialize('json',requisitos)
+		print requisitos
+
+		return HttpResponse(requisitos, content_type="application/json")
+
+	else:
+		return ('/')

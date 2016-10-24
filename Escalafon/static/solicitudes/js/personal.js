@@ -17,3 +17,35 @@ function traerCarrera(){
 		}
 	});
 }
+
+$("#btnGenerar").on('click', validar);
+function validar(){
+	var nombres = $("#txtNombres").val();
+	var apellidos = $("#txtApellidos").val();
+	var cedula = $("#txtCedula").val();
+	var email = $("#txtEmail").val();
+	var unidadAcademica = $("#ddUA").val();
+	var carrera = $("#ddCarreras").val();
+	var categoriaActual = $("#ddCategoriaActual").val();
+	var categoriaAspirada = $("#ddCategoriaAspirada").val();
+	var fechaIngreso = $("#txtFechaIngresoU").val();
+
+	var fecha = new Date();
+		fechaActual = (fecha.getFullYear() +"-"+ (fecha.getMonth() + 1) +"-"+fecha.getDate());
+
+	console.log("Datos recogidos del formulario: "+nombres+" - "+apellidos+" - "+cedula+" - "+email+" - "+unidadAcademica
+		+" - "+carrera+" - "+categoriaActual+" - "+categoriaAspirada+" - "+fechaIngreso+" - "+fechaActual);
+	$.ajax({
+		data : {'nombres':nombres, 'apellidos':apellidos, 'cedula':cedula, 'email':email, 'ua':unidadAcademica,
+				'carrera':carrera, 'cac':categoriaActual, 'cas':categoriaAspirada, 'fi':fechaIngreso, 'fs':fechaActual},
+		url : '/anadirPersonal_traerArchivos/',
+		type : 'get',
+		success : function(data){
+			console.log(data);
+			for (var i = 0; i < data.length; i++) {
+				console.log(data[i].pk + " " +data[i].fields.nombre)
+			}
+			//$("#fsArchivos").append(data);
+		}
+	});
+}
