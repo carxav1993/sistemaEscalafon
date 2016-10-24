@@ -3,5 +3,81 @@
 {% block titulo %}Solicitud{% endblock titulo %}
 
 {% block cuerpo %}
-	<h1>Aqui la descripción del escalafon</h1>
+	<h2 class="text-center">Solicitud de Escalafón</h2>
+	<br />
+	<fieldset>
+		<legend>Datos personales:</legend>
+		<form action="">
+			<div class="row">
+				<div class="col-md-4">
+					<label for="txtNombres">Nombres </label>
+					<input type="text" name="" id="txtNombres" class="campos">
+				</div>
+				<div class="col-md-4">
+					<label for="txtApellidos">Apellidos </label>
+					<input type="text" name="" id="txtApellidos" class="campos">
+				</div>
+				<div class="col-md-4">
+					<label for="txtCedula">Cedula </label>
+					<input type="text" name="" id="txtCedula" class="campos">
+				</div>
+			</div>
+			<br>
+			<div class="row">
+				<div class="col-md-4">
+					<label for="txtEmail">Email </label>
+					<input type="email" name="" id="txtEmail" class="campos">
+				</div>
+				<div class="col-md-4">
+					<label for="ddUA">Unidad Académica </label>
+					<select name="" id="ddUA" class="campos">
+						<option value="0">Selecciona una Unidad Académica</option>
+						{% for ua in unidadesAcademicas %}
+							<option value="{{ua.id}}">{{ua.nombre}}</option>
+						{% endfor %}
+					</select>		
+				</div>
+				<div class="col-md-4">
+					<label for="ddCarreras">Carrera </label>
+					<select name="" id="ddCarreras" class="campos">
+					</select> 		
+				</div>
+			</div>
+			<br>
+			<div class="row">
+				<div class="col-md-4">
+					<label for="ddCaategoriaActual">Categoría Actual</label>
+					<select name="" id="ddCategoriaActual" class="campos">
+						{% for cate in categorias %}
+							<option value="{{cate.id}}">{{cate.nombre}}</option>
+						{% endfor %}			
+					</select> 
+				</div>
+				<div class="col-md-4">
+					<label for="ddCaategoriaAspirada">Categoría Aspirada</label>
+					<select name="" id="ddCategoriaAspirada" class="campos">
+						{% for cate in categorias %}
+							<option value="{{cate.id}}">{{cate.nombre}}</option>
+						{% endfor %}
+					</select>
+				</div>
+				<div class="col-md-4">
+					<label for="txtFechaIngresoU">Fecha ingreso a la U</label>
+					<input type="date" name="" id="txtFechaIngresoU" class="campos">
+				</div>
+			</div>
+			<br>
+			<input type="submit" value="Generar requisitos"><br>
+		</form>
+	</fieldset>
+	<hr>
+	<br>
+	<fieldset id="fsArchivos">
+		<legend>Archivos</legend>
+	</fieldset>
+
 {% endblock cuerpo %}
+
+{% block scripts %}
+
+{% endblock scripts %}
