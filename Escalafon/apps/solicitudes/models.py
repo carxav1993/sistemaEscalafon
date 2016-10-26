@@ -1,3 +1,4 @@
+#encoding:utf-8
 from django.db import models
 
 # Create your models here.
@@ -35,14 +36,29 @@ class Evidencia(models.Model):
 	def __unicode__(self):
 		return "%s %s %s" % (self.requisito.categoria.nombre, self.requisito.nombre, self.nombre)
 
-class Inscripcion(models.Model):
-	cedula = models.CharField(max_length=10)
+class Docente(models.Model):
+	cedula = models.CharField(primary_key=True, max_length=10)
 	apellidoNombre = models.CharField(max_length=150)
 	email = models.EmailField()
+	fechaIngresoU = models.DateTimeField()
+
+	def __unicode__(self):
+		return "%s %s" % (self.cedula, self.apellidoNombre, self.email)
+
+class Proceso(models.Model):
+	nombre = models.CharField(max_length=100)
+	fechaInico = models.DateField()
+	fechaCierre = models.DateField()
+
+	def __unicode__(self):
+		return "%s %s %s" % (self.nombre, self.fechaInico, self.fechaCierre)
+
+class Inscripcion(models.Model):	
+	docente = models.ForeignKey(Docente)
+	proceso = models.ForeignKey(Proceso)
 	carrera = models.ForeignKey(Carrera)
 	categoriaActual = models.ForeignKey(Categoria, related_name='categoriaActual')
 	categoriaSolicitada = models.ForeignKey(Categoria, related_name='categoriaSolicitada')
-	fechaIngresoU = models.DateTimeField()
 	fechaInscripcion = models.DateTimeField()
 	fechaEvaluacion = models.DateTimeField()
 	aprobacion = models.BooleanField()

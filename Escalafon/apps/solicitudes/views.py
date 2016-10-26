@@ -1,6 +1,6 @@
 #encoding:utf-8
 from django.shortcuts import render, redirect
-from .models import UnidadAcademica, Carrera, Categoria, Requisito, Evidencia, Inscripcion, InscripcionRequisito
+from .models import UnidadAcademica, Carrera, Categoria, Requisito, Evidencia, Inscripcion, InscripcionRequisito, Docente, Proceso
 from django.http import JsonResponse, HttpResponse
 from django.core import serializers
 # Create your views here.
@@ -31,29 +31,36 @@ def traerCarreras(request):
 
 def anadirPersonalTraerArchivos(request):
 	if request.is_ajax():
-		apellidoNombre = request.GET['apellidos'] + " " + request.GET['nombres']
 		cedula = request.GET['cedula']
-		email = request.GET['email']
+		if Docente.objects.filter(cedula=cedula).count() == 0:
+			apellidoNombre = request.GET['apellidos'] + " " + request.GET['nombres']
+			email = request.GET['email']
+			fi = request.GET['fi']
+
+			docente = Docente()
+			docente.cedula = cedula
+			docente.apellidoNombre = apellidoNombre
+			docente.email = email
+			docente.fechaIngresoU = fi
+			docente.save()
+
 		ua = request.GET['ua']
 		carrera = request.GET['carrera']
 		cac = request.GET['cac']
 		cas = request.GET['cas']
-		fi = request.GET['fi']
 		fs = request.GET['fs']
 
-		print apellidoNombre +" "+cedula+ " "+email+" "+ua+" "+carrera+" "+ua+" "+carrera+" "+cac+" "+cas+" "+fi+" "+fs 
-
-		# inscripcion = Inscripcion()
-		# inscripcion.apellidoNombre = apellidoNombre
-		# inscripcion.cedula = cedula
-		# inscripcion.email = email
-		# inscripcion.carrera = carrera
-		# inscripcion.categoriaActual = cac
-		# inscripcion.categoriaSolicitada = cas
-		# inscripcion.fechaIngresoU = fi
-		# inscripcion.fechaInscripcion = fs
+		inscripcion = Inscripcion()
+		inscripcion.docente = cedula
+		inscripcion.proceso = "PE-0001"
+		inscripcion.carrera = carrera
+		inscripcion.categoriaActual = cac
+		inscripcion.categoriaSolicitada = cas
+		inscripcion.fechaSolicitud = fs
+		inscripcion.save()
 		
-		# inscripcion.save()
+
+		# print apellidoNombre +" "+cedula+ " "+email+" "+ua+" "+carrera+" "+ua+" "+carrera+" "+cac+" "+cas+" "+fi+" "+fs 
 
 		requisitos = Requisito.objects.filter(categoria=cas)
 		print requisitos

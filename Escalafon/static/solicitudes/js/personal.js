@@ -41,11 +41,21 @@ function validar(){
 		url : '/anadirPersonal_traerArchivos/',
 		type : 'get',
 		success : function(data){
+			
+		}
+	});
+	$.ajax({
+		data : {'codigoCategoria':ddCategoriaAspirada},
+		url : /traerRequisitos/,
+		type : 'get',
+		success : function(data){
 			console.log(data);
 			for (var i = 0; i < data.length; i++) {
-				console.log(data[i].pk + " " +data[i].fields.nombre)
+				//console.log(data[i].pk + " " +data[i].fields.nombre);
+				$("#requisitos").append("<tr><td>"+data[i].fields.nombre+"</td><td><label class=''>Select File</label><input id='archi"+i+"' type='file' class=''></td></tr>");
 			}
 			//$("#fsArchivos").append(data);
 		}
 	});
+
 }
