@@ -7,6 +7,6 @@ urlpatterns = [
 
 	#llamadasAjax
 	url(r'^traerCarreras/$','apps.solicitudes.views.traerCarreras', name='traer_carreras'),
-	url(r'^anadirPersonal_traerArchivos/$','apps.solicitudes.views.anadirPersonalTraerArchivos', 
-		name='anadirPersonal_traerArchivos'),
+	url(r'^anadirPersonal/$','apps.solicitudes.views.anadirPersonal', name='anadir_personal'),
+	url(r'^traerRequisitos/$','apps.solicitudes.views.traerRequisitos', name='traer_requisitos'),
 ]

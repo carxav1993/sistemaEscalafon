@@ -5,32 +5,33 @@
 {% block cuerpo %}
 	<h2 class="text-center">Solicitud de Escalafón</h2>
 	<br />
-	<fieldset>
-		<legend>Datos personales:</legend>
-		<form action="" method="POST">
+	<form action="" method="POST" enctype="multipart/form-data">
+	{% csrf_token %}
+		<fieldset>
+			<legend>Datos personales:</legend>			
 			<div class="row">
 				<div class="col-md-4">
 					<label for="txtNombres">Nombres </label>
-					<input type="text" name="" id="txtNombres" class="campos">
+					<input type="text" name="txtNombres" id="txtNombres" class="campos">
 				</div>
 				<div class="col-md-4">
 					<label for="txtApellidos">Apellidos </label>
-					<input type="text" name="" id="txtApellidos" class="campos">
+					<input type="text" name="txtApellidos" id="txtApellidos" class="campos">
 				</div>
 				<div class="col-md-4">
 					<label for="txtCedula">Cedula </label>
-					<input type="text" name="" id="txtCedula" class="campos">
+					<input type="text" name="txtCedula" id="txtCedula" class="campos">
 				</div>
 			</div>
 			<br>
 			<div class="row">
 				<div class="col-md-4">
 					<label for="txtEmail">Email </label>
-					<input type="email" name="" id="txtEmail" class="campos">
+					<input type="email" name="txtEmail" id="txtEmail" class="campos">
 				</div>
 				<div class="col-md-4">
 					<label for="ddUA">Unidad Académica </label>
-					<select name="" id="ddUA" class="campos">
+					<select name="ddUA" id="ddUA" class="campos">
 						<option value="0">Selecciona una Unidad Académica</option>
 						{% for ua in unidadesAcademicas %}
 							<option value="{{ua.id}}">{{ua.nombre}}</option>
@@ -39,15 +40,15 @@
 				</div>
 				<div class="col-md-4">
 					<label for="ddCarreras">Carrera </label>
-					<select name="" id="ddCarreras" class="campos">
+					<select name="ddCarreras" id="ddCarreras" class="campos">
 					</select> 		
 				</div>
 			</div>
 			<br>
 			<div class="row">
 				<div class="col-md-4">
-					<label for="ddCaategoriaActual">Categoría Actual</label>
-					<select name="" id="ddCategoriaActual" class="campos">
+					<label for="ddCategoriaActual">Categoría Actual</label>
+					<select name="ddCategoriaActual" id="ddCategoriaActual" class="campos">
 						<option value="0">Selecciona una categoría actual</option>
 						{% for cate in categorias %}
 							<option value="{{cate.id}}">{{cate.nombre}}</option>
@@ -55,8 +56,8 @@
 					</select> 
 				</div>
 				<div class="col-md-4">
-					<label for="ddCaategoriaAspirada">Categoría Aspirada</label>
-					<select name="" id="ddCategoriaAspirada" class="campos">
+					<label for="ddCategoriaAspirada">Categoría Aspirada</label>
+					<select name="ddCategoriaAspirada" id="ddCategoriaAspirada" class="campos">
 						<option value="0">Selecciona una categoría aspirada</option>
 						{% for cate in categorias %}
 							<option value="{{cate.id}}">{{cate.nombre}}</option>
@@ -64,33 +65,28 @@
 					</select>
 				</div>
 				<div class="col-md-4">
-					<label for="txtFechaIngresoU">Fecha ingreso a la U</label>
-					<input type="date" name="" id="txtFechaIngresoU" class="campos">
+					<label for="txtFechaIngresoU">Fecha ingreso a la Universidad</label>
+					<input type="date" name="txtFechaIngresoU" id="txtFechaIngresoU" class="campos">
 				</div>
 			</div>
-			<br>
-			<input type="hidden" name="" id="hdIdPersona">
-			<input type="button" value="Generar requisitos" id="btnGenerar"><br>
-		</form>
-	</fieldset>
-	<hr>
-	<br>
-	<fieldset id="fsArchivos">
-		<legend>Archivos</legend>
-		<div class="row">
-			<div class="col-md-12" id="fsArchivos">
-				<form action="" method="POST">
+			<br
+			<input type="button" value="Generar requisitos" id="btnGenerar"><br>		
+		</fieldset>
+		<fieldset id="fsArchivos">
+			<legend>Archivos</legend>
+			<div class="row">
+				<div class="col-md-12" id="fsArchivos">
 					<table class="table table-hover" id="requisitos">
 						<tr>
 							<th>Requisitos</th>
-							<th>Subida archivos</th>
+							<th>Archivos</th>
 						</tr>
 					</table>
-					<input type="submit" value="Inscribirse">
-				</form>
+				</div>
 			</div>
-		</div>
-	</fieldset>
+			<input type="submit" value="Inscribirse">
+		</fieldset>
+	</form>
 
 {% endblock cuerpo %}
 

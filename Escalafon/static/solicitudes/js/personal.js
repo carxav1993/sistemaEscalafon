@@ -2,7 +2,7 @@ $("#ddUA").on('change', traerCarrera);
 function traerCarrera(){
 	var codigo = $("#ddUA").val();
 	console.log('id: '+codigo);
-	console.log($("#txtFechaIngresoU").val());
+	//console.log($("#txtFechaIngresoU").val());
 	$.ajax({
 		data : {'codigo':codigo},
 		url : '/traerCarreras/',
@@ -11,8 +11,24 @@ function traerCarrera(){
 			$("#ddCarreras").html("");
 			for (var i = 0; i < response.length; i++) {
 				$("#ddCarreras").append("<option value='"+response[i].pk+"'>"+(response[i].fields.nombre)+"</option>");
-				// console.log(response[i].fields.nombre);
-				// console.log(response[i].pk);
+			}
+		}
+	});
+}
+
+$("#ddCategoriaAspirada").on('change', traerRequisitos);
+function traerRequisitos(){
+	var id = $("#ddCategoriaAspirada").val();
+	console.log("Categoria: " + id);
+	$.ajax({
+		data : {'id':id},
+		url : '/traerRequisitos/',
+		type : 'get',
+		success : function(data){
+			console.log(data);
+			$("#requisitos").html("<tr><th>Requisitos</th><th>Archivos</th></tr>");
+			for (var i = 0; i < data.length; i++) {
+				$("#requisitos").append("<tr><td>"+data[i].fields.nombre+"</td><td><label class=''>Seleccione archivo</label><input name='archi"+i+"' type='file' class=''></td></tr>");
 			}
 		}
 	});
@@ -38,24 +54,10 @@ function validar(){
 	$.ajax({
 		data : {'nombres':nombres, 'apellidos':apellidos, 'cedula':cedula, 'email':email, 'ua':unidadAcademica,
 				'carrera':carrera, 'cac':categoriaActual, 'cas':categoriaAspirada, 'fi':fechaIngreso, 'fs':fechaActual},
-		url : '/anadirPersonal_traerArchivos/',
+		url : '/anadirPersonal/',
 		type : 'get',
 		success : function(data){
 			
 		}
 	});
-	$.ajax({
-		data : {'codigoCategoria':ddCategoriaAspirada},
-		url : /traerRequisitos/,
-		type : 'get',
-		success : function(data){
-			console.log(data);
-			for (var i = 0; i < data.length; i++) {
-				//console.log(data[i].pk + " " +data[i].fields.nombre);
-				$("#requisitos").append("<tr><td>"+data[i].fields.nombre+"</td><td><label class=''>Select File</label><input id='archi"+i+"' type='file' class=''></td></tr>");
-			}
-			//$("#fsArchivos").append(data);
-		}
-	});
-
 }
