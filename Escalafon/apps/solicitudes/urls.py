@@ -3,6 +3,7 @@ from django.conf.urls import include, url
 urlpatterns = [
 
 	url(r'^$', 'apps.solicitudes.views.inicio', name='inicio'),
+	url(r'^inscripcionExitosa/$','apps.solicitudes.views.inscripcionExitosa', name='inscripcion_exitosa'),
 
 
 	#llamadasAjax

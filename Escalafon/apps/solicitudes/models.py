@@ -40,10 +40,10 @@ class Docente(models.Model):
 	cedula = models.CharField(primary_key=True, max_length=10)
 	apellidoNombre = models.CharField(max_length=150)
 	email = models.EmailField()
-	fechaIngresoU = models.DateTimeField()
+	fechaIngresoU = models.DateTimeField(null=True)
 
 	def __unicode__(self):
-		return "%s %s" % (self.cedula, self.apellidoNombre, self.email)
+		return "%s %s" % (self.cedula, self.apellidoNombre)
 
 class Proceso(models.Model):
 	nombre = models.CharField(primary_key=True, max_length=10)
@@ -59,12 +59,12 @@ class Inscripcion(models.Model):
 	carrera = models.ForeignKey(Carrera)
 	categoriaActual = models.ForeignKey(Categoria, related_name='categoriaActual')
 	categoriaSolicitada = models.ForeignKey(Categoria, related_name='categoriaSolicitada')
-	fechaInscripcion = models.DateTimeField()
+	fechaInscripcion = models.DateTimeField(null=True)
 	fechaEvaluacion = models.DateTimeField(null=True)
 	aprobacion = models.BooleanField(default=False)
 
 	def __unicode__(self):
-		return "%s %s %s" % (self.cedula, self.apellidoNombre, self.carrera.nombre)
+		return "%s %s %s" % (self.docente.apellidoNombre, self.proceso.nombre, self.carrera.nombre)
 
 class InscripcionRequisito(models.Model):
 	inscripcion = models.ForeignKey(Inscripcion)
@@ -74,4 +74,4 @@ class InscripcionRequisito(models.Model):
 	observacion = models.CharField(max_length=500, null=True)
 
 	def __unicode__(self):
-		return "%s %s %s" %(self.inscripcion.apellidoNombre, self.requisito.nombre)
+		return "%s %s %s" %(self.inscripcion.docente.apellidoNombre, self.requisito.nombre, self.archivo)

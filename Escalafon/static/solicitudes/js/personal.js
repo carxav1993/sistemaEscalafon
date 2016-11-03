@@ -26,38 +26,10 @@ function traerRequisitos(){
 		type : 'get',
 		success : function(data){
 			console.log(data);
-			$("#requisitos").html("<tr><th>Requisitos</th><th>Archivos</th></tr>");
+			$("#requisitos").html("<tr><th>Requisitos</th><th>Evidencias</th><th>Archivos</th></tr>");
 			for (var i = 0; i < data.length; i++) {
-				$("#requisitos").append("<tr><td>"+data[i].fields.nombre+"</td><td><label class=''>Seleccione archivo</label><input name='archi"+i+"' type='file' class=''></td></tr>");
+				$("#requisitos").append("<tr><td>"+data[i].fields.nombre+"</td><td><p>Evidencia aquí</p></td><td><label class=''>Seleccione archivo</label><input name='archi"+i+"' type='file' class=''></td></tr>");
 			}
-		}
-	});
-}
-
-$("#btnGenerar").on('click', validar);
-function validar(){
-	var nombres = $("#txtNombres").val();
-	var apellidos = $("#txtApellidos").val();
-	var cedula = $("#txtCedula").val();
-	var email = $("#txtEmail").val();
-	var unidadAcademica = $("#ddUA").val();
-	var carrera = $("#ddCarreras").val();
-	var categoriaActual = $("#ddCategoriaActual").val();
-	var categoriaAspirada = $("#ddCategoriaAspirada").val();
-	var fechaIngreso = $("#txtFechaIngresoU").val();
-
-	var fecha = new Date();
-		fechaActual = (fecha.getFullYear() +"-"+ (fecha.getMonth() + 1) +"-"+fecha.getDate());
-
-	console.log("Datos recogidos del formulario: "+nombres+" - "+apellidos+" - "+cedula+" - "+email+" - "+unidadAcademica
-		+" - "+carrera+" - "+categoriaActual+" - "+categoriaAspirada+" - "+fechaIngreso+" - "+fechaActual);
-	$.ajax({
-		data : {'nombres':nombres, 'apellidos':apellidos, 'cedula':cedula, 'email':email, 'ua':unidadAcademica,
-				'carrera':carrera, 'cac':categoriaActual, 'cas':categoriaAspirada, 'fi':fechaIngreso, 'fs':fechaActual},
-		url : '/anadirPersonal/',
-		type : 'get',
-		success : function(data){
-			
 		}
 	});
 }

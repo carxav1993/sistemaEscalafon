@@ -13,37 +13,40 @@ def inicio(request):
 			docente.cedula = request.POST.get('txtCedula')
 			docente.apellidoNombre = '%s %s' %(request.POST.get('txtApellidos'), request.POST.get('txtNombres'))
 			docente.email = request.POST.get('txtEmail')
-			docente.fechaIngresoU = request.POST.get('txtFechaIngresoU')
+			#docente.fechaIngresoU = request.POST.get('txtFechaIngresoU')
 			docente.save()
 		
 		inscripcion = Inscripcion()
 		inscripcion.docente = Docente.objects.get(cedula=cedula)
-		inscripcion.proceso = "PE-0001"
-		inscripcion.carrera = request.POST.get('ddCarreras')
-		inscripcion.categoriaActual = request.POST.get('ddCategoriaActual')
-		inscripcion.categoriaSolicitada = request.POST.get('ddCategoriaAspirada')
+		inscripcion.proceso = Proceso.objects.get(nombre="PE-0001")
+		inscripcion.carrera = Carrera.objects.get(id=request.POST.get('ddCarreras'))
+		inscripcion.categoriaActual = Categoria.objects.get(id=request.POST.get('ddCategoriaActual'))
+		inscripcion.categoriaSolicitada = Categoria.objects.get(id=request.POST.get('ddCategoriaAspirada'))
 		print time.strftime("%x")
-		inscripcion.fechaSolicitud = time.strftime("%x")
+		# inscripcion.fechaInscripcion = time.strftime("%x")
 		inscripcion.save()
 
 		idInscripcion = inscripcion.id
 		print idInscripcion
 		
 		requisitos = Requisito.objects.filter(categoria_id=request.POST.get('ddCategoriaAspirada'))
-
-		inscripcionRequisito = InscripcionRequisito()
 		
-		for r in len(requisitos):
-			inscripcionRequisito.inscripcion = idInscripcion
-			inscripcionRequisito.requisito = requisitos[i].id
-			inscripcionRequisito.archivo = request.POST.get('archi'+r)
+		acu = 0
+		for r in range(len(requisitos)):
+			inscripcionRequisito = InscripcionRequisito()
+			inscripcionRequisito.inscripcion = inscripcion
+			inscripcionRequisito.requisito = requisitos[acu]
+			inscripcionRequisito.archivo = request.FILES['archi%d' %acu]
 			inscripcionRequisito.save()
+			acu += 1
 		return redirect('/')
 	else:
 		categorias = Categoria.objects.all().order_by('nombre')
 		unidadesAcademicas = UnidadAcademica.objects.all()
 		return render(request, 'solicitudes/index.html',{'categorias':categorias, 'unidadesAcademicas':unidadesAcademicas})
 
+def inscripcionExitosa(request):
+	render(request, 'solicitudes/inscripcioExitosa.html', {})
 
 #vistas de ajax
 def traerCarreras(request):
